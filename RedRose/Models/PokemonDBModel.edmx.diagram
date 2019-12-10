@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e744cf3f6e174dc193765f89dd72917b" Name="Diagram1">
+        <EntityTypeShape EntityType="RedRoseDBModel.ChargedAttack" Width="1.5" PointX="3.375" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RedRoseDBModel.ElementalTyping" Width="1.5" PointX="6" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RedRoseDBModel.FastAttack" Width="1.5" PointX="4.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RedRoseDBModel.Pokemon" Width="1.5" PointX="7.125" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RedRoseDBModel.PrimaryTyping" Width="1.5" PointX="1.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RedRoseDBModel.SecondaryTyping" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="RedRoseDBModel.FK_dbo_ChargedAttack_dbo_PrimaryTyping_PrimaryTypingId" ManuallyRouted="false" />
+        <AssociationConnector Association="RedRoseDBModel.FK_dbo_Pokemon_dbo_ChargedAttack_ChargedAttackId" ManuallyRouted="false" />
+        <AssociationConnector Association="RedRoseDBModel.FK_dbo_ElementalTyping_dbo_PrimaryTyping_PrimaryTypingId" ManuallyRouted="false" />
+        <AssociationConnector Association="RedRoseDBModel.FK_dbo_ElementalTyping_dbo_SecondaryTyping_SecondaryTypingId" ManuallyRouted="false" />
+        <AssociationConnector Association="RedRoseDBModel.FK_dbo_Pokemon_dbo_ElementalTyping_ElementalTypingId" ManuallyRouted="false" />
+        <AssociationConnector Association="RedRoseDBModel.FK_dbo_FastAttack_dbo_PrimaryTyping_PrimaryTypingId" ManuallyRouted="false" />
+        <AssociationConnector Association="RedRoseDBModel.FK_dbo_Pokemon_dbo_FastAttack_FastAttackId" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

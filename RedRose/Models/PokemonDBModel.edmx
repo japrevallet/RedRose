@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RedRoseDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ChargedAttack">
+          <Key>
+            <PropertyRef Name="ChargedAttackId" />
+          </Key>
+          <Property Name="ChargedAttackId" Type="int" Nullable="false" />
+          <Property Name="ChargedAttackName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PrimaryTypingId" Type="int" Nullable="false" />
+          <Property Name="ChargedAttackMeter" Type="int" Nullable="false" />
+          <Property Name="ChargedAttackDamage" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ElementalTyping">
+          <Key>
+            <PropertyRef Name="ElementalTypingId" />
+          </Key>
+          <Property Name="ElementalTypingId" Type="int" Nullable="false" />
+          <Property Name="PrimaryTypingId" Type="int" Nullable="false" />
+          <Property Name="SecondaryTypingId" Type="int" />
+        </EntityType>
+        <EntityType Name="FastAttack">
+          <Key>
+            <PropertyRef Name="FastAttackId" />
+          </Key>
+          <Property Name="FastAttackId" Type="int" Nullable="false" />
+          <Property Name="FastAttackName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PrimaryTypingId" Type="int" Nullable="false" />
+          <Property Name="FastAttackDamage" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pokemon">
+          <Key>
+            <PropertyRef Name="PokemonId" />
+          </Key>
+          <Property Name="PokemonId" Type="int" Nullable="false" />
+          <Property Name="PokemonName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ElementalTypingId" Type="int" Nullable="false" />
+          <Property Name="FastAttackId" Type="int" Nullable="false" />
+          <Property Name="ChargedAttackId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PrimaryTyping">
+          <Key>
+            <PropertyRef Name="PrimaryTypingId" />
+          </Key>
+          <Property Name="PrimaryTypingId" Type="int" Nullable="false" />
+          <Property Name="PrimaryTypingName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SecondaryTyping">
+          <Key>
+            <PropertyRef Name="SecondaryTypingId" />
+          </Key>
+          <Property Name="SecondaryTypingId" Type="int" Nullable="false" />
+          <Property Name="SecondaryTypingName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_ChargedAttack_dbo_PrimaryTyping_PrimaryTypingId">
+          <End Role="PrimaryTyping" Type="Self.PrimaryTyping" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ChargedAttack" Type="Self.ChargedAttack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrimaryTyping">
+              <PropertyRef Name="PrimaryTypingId" />
+            </Principal>
+            <Dependent Role="ChargedAttack">
+              <PropertyRef Name="PrimaryTypingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ElementalTyping_dbo_PrimaryTyping_PrimaryTypingId">
+          <End Role="PrimaryTyping" Type="Self.PrimaryTyping" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ElementalTyping" Type="Self.ElementalTyping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrimaryTyping">
+              <PropertyRef Name="PrimaryTypingId" />
+            </Principal>
+            <Dependent Role="ElementalTyping">
+              <PropertyRef Name="PrimaryTypingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ElementalTyping_dbo_SecondaryTyping_SecondaryTypingId">
+          <End Role="SecondaryTyping" Type="Self.SecondaryTyping" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ElementalTyping" Type="Self.ElementalTyping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SecondaryTyping">
+              <PropertyRef Name="SecondaryTypingId" />
+            </Principal>
+            <Dependent Role="ElementalTyping">
+              <PropertyRef Name="SecondaryTypingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_FastAttack_dbo_PrimaryTyping_PrimaryTypingId">
+          <End Role="PrimaryTyping" Type="Self.PrimaryTyping" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FastAttack" Type="Self.FastAttack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrimaryTyping">
+              <PropertyRef Name="PrimaryTypingId" />
+            </Principal>
+            <Dependent Role="FastAttack">
+              <PropertyRef Name="PrimaryTypingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Pokemon_dbo_ChargedAttack_ChargedAttackId">
+          <End Role="ChargedAttack" Type="Self.ChargedAttack" Multiplicity="1" />
+          <End Role="Pokemon" Type="Self.Pokemon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChargedAttack">
+              <PropertyRef Name="ChargedAttackId" />
+            </Principal>
+            <Dependent Role="Pokemon">
+              <PropertyRef Name="ChargedAttackId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Pokemon_dbo_ElementalTyping_ElementalTypingId">
+          <End Role="ElementalTyping" Type="Self.ElementalTyping" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Pokemon" Type="Self.Pokemon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ElementalTyping">
+              <PropertyRef Name="ElementalTypingId" />
+            </Principal>
+            <Dependent Role="Pokemon">
+              <PropertyRef Name="ElementalTypingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Pokemon_dbo_FastAttack_FastAttackId">
+          <End Role="FastAttack" Type="Self.FastAttack" Multiplicity="1" />
+          <End Role="Pokemon" Type="Self.Pokemon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FastAttack">
+              <PropertyRef Name="FastAttackId" />
+            </Principal>
+            <Dependent Role="Pokemon">
+              <PropertyRef Name="FastAttackId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RedRoseDBModelStoreContainer">
+          <EntitySet Name="ChargedAttack" EntityType="Self.ChargedAttack" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ElementalTyping" EntityType="Self.ElementalTyping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FastAttack" EntityType="Self.FastAttack" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pokemon" EntityType="Self.Pokemon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PrimaryTyping" EntityType="Self.PrimaryTyping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SecondaryTyping" EntityType="Self.SecondaryTyping" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_ChargedAttack_dbo_PrimaryTyping_PrimaryTypingId" Association="Self.FK_dbo_ChargedAttack_dbo_PrimaryTyping_PrimaryTypingId">
+            <End Role="PrimaryTyping" EntitySet="PrimaryTyping" />
+            <End Role="ChargedAttack" EntitySet="ChargedAttack" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ElementalTyping_dbo_PrimaryTyping_PrimaryTypingId" Association="Self.FK_dbo_ElementalTyping_dbo_PrimaryTyping_PrimaryTypingId">
+            <End Role="PrimaryTyping" EntitySet="PrimaryTyping" />
+            <End Role="ElementalTyping" EntitySet="ElementalTyping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ElementalTyping_dbo_SecondaryTyping_SecondaryTypingId" Association="Self.FK_dbo_ElementalTyping_dbo_SecondaryTyping_SecondaryTypingId">
+            <End Role="SecondaryTyping" EntitySet="SecondaryTyping" />
+            <End Role="ElementalTyping" EntitySet="ElementalTyping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_FastAttack_dbo_PrimaryTyping_PrimaryTypingId" Association="Self.FK_dbo_FastAttack_dbo_PrimaryTyping_PrimaryTypingId">
+            <End Role="PrimaryTyping" EntitySet="PrimaryTyping" />
+            <End Role="FastAttack" EntitySet="FastAttack" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Pokemon_dbo_ChargedAttack_ChargedAttackId" Association="Self.FK_dbo_Pokemon_dbo_ChargedAttack_ChargedAttackId">
+            <End Role="ChargedAttack" EntitySet="ChargedAttack" />
+            <End Role="Pokemon" EntitySet="Pokemon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Pokemon_dbo_ElementalTyping_ElementalTypingId" Association="Self.FK_dbo_Pokemon_dbo_ElementalTyping_ElementalTypingId">
+            <End Role="ElementalTyping" EntitySet="ElementalTyping" />
+            <End Role="Pokemon" EntitySet="Pokemon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Pokemon_dbo_FastAttack_FastAttackId" Association="Self.FK_dbo_Pokemon_dbo_FastAttack_FastAttackId">
+            <End Role="FastAttack" EntitySet="FastAttack" />
+            <End Role="Pokemon" EntitySet="Pokemon" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RedRoseDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ChargedAttack">
+          <Key>
+            <PropertyRef Name="ChargedAttackId" />
+          </Key>
+          <Property Name="ChargedAttackId" Type="Int32" Nullable="false" />
+          <Property Name="ChargedAttackName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PrimaryTypingId" Type="Int32" Nullable="false" />
+          <Property Name="ChargedAttackMeter" Type="Int32" Nullable="false" />
+          <Property Name="ChargedAttackDamage" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PrimaryTyping" Relationship="Self.FK_dbo_ChargedAttack_dbo_PrimaryTyping_PrimaryTypingId" FromRole="ChargedAttack" ToRole="PrimaryTyping" />
+          <NavigationProperty Name="Pokemons" Relationship="Self.FK_dbo_Pokemon_dbo_ChargedAttack_ChargedAttackId" FromRole="ChargedAttack" ToRole="Pokemon" />
+        </EntityType>
+        <EntityType Name="ElementalTyping">
+          <Key>
+            <PropertyRef Name="ElementalTypingId" />
+          </Key>
+          <Property Name="ElementalTypingId" Type="Int32" Nullable="false" />
+          <Property Name="PrimaryTypingId" Type="Int32" Nullable="false" />
+          <Property Name="SecondaryTypingId" Type="Int32" />
+          <NavigationProperty Name="PrimaryTyping" Relationship="Self.FK_dbo_ElementalTyping_dbo_PrimaryTyping_PrimaryTypingId" FromRole="ElementalTyping" ToRole="PrimaryTyping" />
+          <NavigationProperty Name="SecondaryTyping" Relationship="Self.FK_dbo_ElementalTyping_dbo_SecondaryTyping_SecondaryTypingId" FromRole="ElementalTyping" ToRole="SecondaryTyping" />
+          <NavigationProperty Name="Pokemons" Relationship="Self.FK_dbo_Pokemon_dbo_ElementalTyping_ElementalTypingId" FromRole="ElementalTyping" ToRole="Pokemon" />
+        </EntityType>
+        <EntityType Name="FastAttack">
+          <Key>
+            <PropertyRef Name="FastAttackId" />
+          </Key>
+          <Property Name="FastAttackId" Type="Int32" Nullable="false" />
+          <Property Name="FastAttackName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PrimaryTypingId" Type="Int32" Nullable="false" />
+          <Property Name="FastAttackDamage" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PrimaryTyping" Relationship="Self.FK_dbo_FastAttack_dbo_PrimaryTyping_PrimaryTypingId" FromRole="FastAttack" ToRole="PrimaryTyping" />
+          <NavigationProperty Name="Pokemons" Relationship="Self.FK_dbo_Pokemon_dbo_FastAttack_FastAttackId" FromRole="FastAttack" ToRole="Pokemon" />
+        </EntityType>
+        <EntityType Name="Pokemon">
+          <Key>
+            <PropertyRef Name="PokemonId" />
+          </Key>
+          <Property Name="PokemonId" Type="Int32" Nullable="false" />
+          <Property Name="PokemonName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ElementalTypingId" Type="Int32" Nullable="false" />
+          <Property Name="FastAttackId" Type="Int32" Nullable="false" />
+          <Property Name="ChargedAttackId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ChargedAttack" Relationship="Self.FK_dbo_Pokemon_dbo_ChargedAttack_ChargedAttackId" FromRole="Pokemon" ToRole="ChargedAttack" />
+          <NavigationProperty Name="ElementalTyping" Relationship="Self.FK_dbo_Pokemon_dbo_ElementalTyping_ElementalTypingId" FromRole="Pokemon" ToRole="ElementalTyping" />
+          <NavigationProperty Name="FastAttack" Relationship="Self.FK_dbo_Pokemon_dbo_FastAttack_FastAttackId" FromRole="Pokemon" ToRole="FastAttack" />
+        </EntityType>
+        <EntityType Name="PrimaryTyping">
+          <Key>
+            <PropertyRef Name="PrimaryTypingId" />
+          </Key>
+          <Property Name="PrimaryTypingId" Type="Int32" Nullable="false" />
+          <Property Name="PrimaryTypingName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ChargedAttacks" Relationship="Self.FK_dbo_ChargedAttack_dbo_PrimaryTyping_PrimaryTypingId" FromRole="PrimaryTyping" ToRole="ChargedAttack" />
+          <NavigationProperty Name="ElementalTypings" Relationship="Self.FK_dbo_ElementalTyping_dbo_PrimaryTyping_PrimaryTypingId" FromRole="PrimaryTyping" ToRole="ElementalTyping" />
+          <NavigationProperty Name="FastAttacks" Relationship="Self.FK_dbo_FastAttack_dbo_PrimaryTyping_PrimaryTypingId" FromRole="PrimaryTyping" ToRole="FastAttack" />
+        </EntityType>
+        <EntityType Name="SecondaryTyping">
+          <Key>
+            <PropertyRef Name="SecondaryTypingId" />
+          </Key>
+          <Property Name="SecondaryTypingId" Type="Int32" Nullable="false" />
+          <Property Name="SecondaryTypingName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ElementalTypings" Relationship="Self.FK_dbo_ElementalTyping_dbo_SecondaryTyping_SecondaryTypingId" FromRole="SecondaryTyping" ToRole="ElementalTyping" />
+        </EntityType>
+        <Association Name="FK_dbo_ChargedAttack_dbo_PrimaryTyping_PrimaryTypingId">
+          <End Role="PrimaryTyping" Type="Self.PrimaryTyping" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ChargedAttack" Type="Self.ChargedAttack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrimaryTyping">
+              <PropertyRef Name="PrimaryTypingId" />
+            </Principal>
+            <Dependent Role="ChargedAttack">
+              <PropertyRef Name="PrimaryTypingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Pokemon_dbo_ChargedAttack_ChargedAttackId">
+          <End Role="ChargedAttack" Type="Self.ChargedAttack" Multiplicity="1" />
+          <End Role="Pokemon" Type="Self.Pokemon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChargedAttack">
+              <PropertyRef Name="ChargedAttackId" />
+            </Principal>
+            <Dependent Role="Pokemon">
+              <PropertyRef Name="ChargedAttackId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ElementalTyping_dbo_PrimaryTyping_PrimaryTypingId">
+          <End Role="PrimaryTyping" Type="Self.PrimaryTyping" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ElementalTyping" Type="Self.ElementalTyping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrimaryTyping">
+              <PropertyRef Name="PrimaryTypingId" />
+            </Principal>
+            <Dependent Role="ElementalTyping">
+              <PropertyRef Name="PrimaryTypingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ElementalTyping_dbo_SecondaryTyping_SecondaryTypingId">
+          <End Role="SecondaryTyping" Type="Self.SecondaryTyping" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ElementalTyping" Type="Self.ElementalTyping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SecondaryTyping">
+              <PropertyRef Name="SecondaryTypingId" />
+            </Principal>
+            <Dependent Role="ElementalTyping">
+              <PropertyRef Name="SecondaryTypingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Pokemon_dbo_ElementalTyping_ElementalTypingId">
+          <End Role="ElementalTyping" Type="Self.ElementalTyping" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Pokemon" Type="Self.Pokemon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ElementalTyping">
+              <PropertyRef Name="ElementalTypingId" />
+            </Principal>
+            <Dependent Role="Pokemon">
+              <PropertyRef Name="ElementalTypingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_FastAttack_dbo_PrimaryTyping_PrimaryTypingId">
+          <End Role="PrimaryTyping" Type="Self.PrimaryTyping" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FastAttack" Type="Self.FastAttack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrimaryTyping">
+              <PropertyRef Name="PrimaryTypingId" />
+            </Principal>
+            <Dependent Role="FastAttack">
+              <PropertyRef Name="PrimaryTypingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Pokemon_dbo_FastAttack_FastAttackId">
+          <End Role="FastAttack" Type="Self.FastAttack" Multiplicity="1" />
+          <End Role="Pokemon" Type="Self.Pokemon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FastAttack">
+              <PropertyRef Name="FastAttackId" />
+            </Principal>
+            <Dependent Role="Pokemon">
+              <PropertyRef Name="FastAttackId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RedRoseDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ChargedAttacks" EntityType="Self.ChargedAttack" />
+          <EntitySet Name="ElementalTypings" EntityType="Self.ElementalTyping" />
+          <EntitySet Name="FastAttacks" EntityType="Self.FastAttack" />
+          <EntitySet Name="Pokemons" EntityType="Self.Pokemon" />
+          <EntitySet Name="PrimaryTypings" EntityType="Self.PrimaryTyping" />
+          <EntitySet Name="SecondaryTypings" EntityType="Self.SecondaryTyping" />
+          <AssociationSet Name="FK_dbo_ChargedAttack_dbo_PrimaryTyping_PrimaryTypingId" Association="Self.FK_dbo_ChargedAttack_dbo_PrimaryTyping_PrimaryTypingId">
+            <End Role="PrimaryTyping" EntitySet="PrimaryTypings" />
+            <End Role="ChargedAttack" EntitySet="ChargedAttacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Pokemon_dbo_ChargedAttack_ChargedAttackId" Association="Self.FK_dbo_Pokemon_dbo_ChargedAttack_ChargedAttackId">
+            <End Role="ChargedAttack" EntitySet="ChargedAttacks" />
+            <End Role="Pokemon" EntitySet="Pokemons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ElementalTyping_dbo_PrimaryTyping_PrimaryTypingId" Association="Self.FK_dbo_ElementalTyping_dbo_PrimaryTyping_PrimaryTypingId">
+            <End Role="PrimaryTyping" EntitySet="PrimaryTypings" />
+            <End Role="ElementalTyping" EntitySet="ElementalTypings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ElementalTyping_dbo_SecondaryTyping_SecondaryTypingId" Association="Self.FK_dbo_ElementalTyping_dbo_SecondaryTyping_SecondaryTypingId">
+            <End Role="SecondaryTyping" EntitySet="SecondaryTypings" />
+            <End Role="ElementalTyping" EntitySet="ElementalTypings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Pokemon_dbo_ElementalTyping_ElementalTypingId" Association="Self.FK_dbo_Pokemon_dbo_ElementalTyping_ElementalTypingId">
+            <End Role="ElementalTyping" EntitySet="ElementalTypings" />
+            <End Role="Pokemon" EntitySet="Pokemons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_FastAttack_dbo_PrimaryTyping_PrimaryTypingId" Association="Self.FK_dbo_FastAttack_dbo_PrimaryTyping_PrimaryTypingId">
+            <End Role="PrimaryTyping" EntitySet="PrimaryTypings" />
+            <End Role="FastAttack" EntitySet="FastAttacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Pokemon_dbo_FastAttack_FastAttackId" Association="Self.FK_dbo_Pokemon_dbo_FastAttack_FastAttackId">
+            <End Role="FastAttack" EntitySet="FastAttacks" />
+            <End Role="Pokemon" EntitySet="Pokemons" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RedRoseDBModelStoreContainer" CdmEntityContainer="RedRoseDBEntities">
+          <EntitySetMapping Name="ChargedAttacks">
+            <EntityTypeMapping TypeName="RedRoseDBModel.ChargedAttack">
+              <MappingFragment StoreEntitySet="ChargedAttack">
+                <ScalarProperty Name="ChargedAttackId" ColumnName="ChargedAttackId" />
+                <ScalarProperty Name="ChargedAttackName" ColumnName="ChargedAttackName" />
+                <ScalarProperty Name="PrimaryTypingId" ColumnName="PrimaryTypingId" />
+                <ScalarProperty Name="ChargedAttackMeter" ColumnName="ChargedAttackMeter" />
+                <ScalarProperty Name="ChargedAttackDamage" ColumnName="ChargedAttackDamage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ElementalTypings">
+            <EntityTypeMapping TypeName="RedRoseDBModel.ElementalTyping">
+              <MappingFragment StoreEntitySet="ElementalTyping">
+                <ScalarProperty Name="ElementalTypingId" ColumnName="ElementalTypingId" />
+                <ScalarProperty Name="PrimaryTypingId" ColumnName="PrimaryTypingId" />
+                <ScalarProperty Name="SecondaryTypingId" ColumnName="SecondaryTypingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FastAttacks">
+            <EntityTypeMapping TypeName="RedRoseDBModel.FastAttack">
+              <MappingFragment StoreEntitySet="FastAttack">
+                <ScalarProperty Name="FastAttackId" ColumnName="FastAttackId" />
+                <ScalarProperty Name="FastAttackName" ColumnName="FastAttackName" />
+                <ScalarProperty Name="PrimaryTypingId" ColumnName="PrimaryTypingId" />
+                <ScalarProperty Name="FastAttackDamage" ColumnName="FastAttackDamage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pokemons">
+            <EntityTypeMapping TypeName="RedRoseDBModel.Pokemon">
+              <MappingFragment StoreEntitySet="Pokemon">
+                <ScalarProperty Name="PokemonId" ColumnName="PokemonId" />
+                <ScalarProperty Name="PokemonName" ColumnName="PokemonName" />
+                <ScalarProperty Name="ElementalTypingId" ColumnName="ElementalTypingId" />
+                <ScalarProperty Name="FastAttackId" ColumnName="FastAttackId" />
+                <ScalarProperty Name="ChargedAttackId" ColumnName="ChargedAttackId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrimaryTypings">
+            <EntityTypeMapping TypeName="RedRoseDBModel.PrimaryTyping">
+              <MappingFragment StoreEntitySet="PrimaryTyping">
+                <ScalarProperty Name="PrimaryTypingId" ColumnName="PrimaryTypingId" />
+                <ScalarProperty Name="PrimaryTypingName" ColumnName="PrimaryTypingName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SecondaryTypings">
+            <EntityTypeMapping TypeName="RedRoseDBModel.SecondaryTyping">
+              <MappingFragment StoreEntitySet="SecondaryTyping">
+                <ScalarProperty Name="SecondaryTypingId" ColumnName="SecondaryTypingId" />
+                <ScalarProperty Name="SecondaryTypingName" ColumnName="SecondaryTypingName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
